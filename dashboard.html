@@ -1,0 +1,86 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="/test/favicon.png">
+  <title>Llegadas</title>
+  <link rel="stylesheet" href="/test/estilo.css">
+
+  <script>
+  var PantComp = false;
+
+  function TraeData(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var ResWeb = xhttp.responseText; // console.log(ResWeb);
+        if(ResWeb.length>5){
+          Lineas = ResWeb.split("\n");
+          Lineas.reverse(); var i = -1;
+          for (const Linea of Lineas){
+            i++;
+            Elemento = Linea.split(",");
+            if (i<1) {continue;}
+            document.getElementById("F" + i + "C1").innerHTML = Elemento[0];
+            document.getElementById("F" + i + "C2").innerHTML = Elemento[1];
+            document.getElementById("F" + i + "C3").innerHTML = Elemento[2];
+          }
+        }
+      }
+    };
+    xhttp.open("GET", './test.dat', true); xhttp.send();
+  }
+  
+  function PantallaCompleta(){
+  var elem = document.getElementById("centrado"); 
+  var Pantalla = document.getElementById("viewport");
+   if (PantComp){
+    PantComp = false;
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) { /* Firefox */
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { /* IE/Edge */
+      document.msExitFullscreen();
+    }
+    Pantalla.setAttribute("content", "initial-scale=0.5, user-scalable=yes");
+   }else{
+    PantComp = true;
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) { /* Firefox */
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+      elem.msRequestFullscreen();
+    }
+    Pantalla.setAttribute("content", "initial-scale=0.52, user-scalable=no");
+   }
+  }
+
+  </script>
+</head>
+
+<body><div id="centrado" align="center"><div id="Contenido">
+<table>
+  <tr><th name="C1">Llegadas</th><th name="C2">Naves</th><th name="C3">Notas</th></tr>
+  <tr><td name="C1" id="F1C1"></td><td name="C2" id="F1C2"></td><td name="C3" id="F1C3"></td></tr>
+  <tr><td name="C1" id="F2C1"></td><td name="C2" id="F2C2"></td><td name="C3" id="F2C3"></td></tr>
+  <tr><td name="C1" id="F3C1"></td><td name="C2" id="F3C2"></td><td name="C3" id="F3C3"></td></tr>
+  <tr><td name="C1" id="F4C1"></td><td name="C2" id="F4C2"></td><td name="C3" id="F4C3"></td></tr>
+  <tr><td name="C1" id="F5C1"></td><td name="C2" id="F5C2"></td><td name="C3" id="F5C3"></td></tr>
+  <tr><td name="C1" id="F6C1"></td><td name="C2" id="F6C2"></td><td name="C3" id="F6C3"></td></tr>
+  <tr><td name="C1" id="F7C1"></td><td name="C2" id="F7C2"></td><td name="C3" id="F7C3"></td></tr>
+  <tr><td name="C1" id="F8C1"></td><td name="C2" id="F8C2"></td><td name="C3" id="F8C3"></td></tr>
+  <tr><td name="C1" id="F9C1"></td><td name="C2" id="F9C2"></td><td name="C3" id="F9C3"></td></tr>
+  <tr><td name="C1" id="F10C1"></td><td name="C2" id="F10C2"></td><td name="C3" id="F10C3"></td></tr>
+</table>
+<script>setInterval(function(){TraeData();},2000);</script>
+</div><img src="./fullscreenw.png" onclick="PantallaCompleta()"></div>
+</body>
+</html>
